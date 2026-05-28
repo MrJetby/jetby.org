@@ -610,28 +610,42 @@
   })();
 
   let playing = false;
-  const playBtn = document.getElementById('playBtn');
-  const playIcon = document.getElementById('playIcon');
-  const albumArt = document.getElementById('albumArt');
-  const progressFill = document.getElementById('progressFill');
-  const bars = [document.getElementById('b1'), document.getElementById('b2'), document.getElementById('b3'), document.getElementById('b4'), document.getElementById('b5')];
 
-  playBtn.addEventListener('click', () => {
-    if (!playing) {
-      window.open('https://music.youtube.com/watch?v=di5Gqv87oW8', '_blank');
-      playing = true;
-      albumArt.classList.add('playing');
-      progressFill.classList.add('playing');
-      bars.forEach(b => b.classList.add('active'));
-      playIcon.innerHTML = '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
-    } else {
-      playing = false;
-      albumArt.classList.remove('playing');
-      progressFill.classList.remove('playing');
-      bars.forEach(b => b.classList.remove('active'));
-      playIcon.innerHTML = '<polygon points="5 3 19 12 5 21 5 3"/>';
-    }
-  });
+const playBtn = document.getElementById('playBtn');
+const playIcon = document.getElementById('playIcon');
+const albumArt = document.getElementById('albumArt');
+const progressFill = document.getElementById('progressFill');
+const bars = [
+  document.getElementById('b1'),
+  document.getElementById('b2'),
+  document.getElementById('b3'),
+  document.getElementById('b4'),
+  document.getElementById('b5')
+];
+
+const audio = document.getElementById('audioPlayer');
+
+playBtn.addEventListener('click', async () => {
+  if (!playing) {
+    await audio.play();
+
+    playing = true;
+    albumArt.classList.add('playing');
+    progressFill.classList.add('playing');
+    bars.forEach(b => b.classList.add('active'));
+
+    playIcon.innerHTML = '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
+  } else {
+    audio.pause();
+
+    playing = false;
+    albumArt.classList.remove('playing');
+    progressFill.classList.remove('playing');
+    bars.forEach(b => b.classList.remove('active'));
+
+    playIcon.innerHTML = '<polygon points="5 3 19 12 5 21 5 3"/>';
+  }
+});
 </script>
 
 </body>
